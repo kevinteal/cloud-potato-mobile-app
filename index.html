@@ -1,0 +1,93 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>The Cloud Potato</title>
+	<link rel="stylesheet" href="themes/cloudy.min.css" />
+	<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="js_css/jquery.mobile.structure-1.4.5.min.css" />
+    <link rel="stylesheet" href="js_css/stylecloud.css" />
+    <script src="js_css/jquery-1.11.1.min.js"></script>
+	<script src="js_css/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js_css/cloudy.js"></script>
+</head>
+<body>
+<!-- HOME NAV PAGE -->
+	<div data-role="page" id="cloud_home" data-theme="a">
+		<div data-role="header" data-position="inline">
+			<div id="heading">The Cloud Potato</div>
+		</div>
+		<div data-role="content" data-theme="a">
+			<div class="nav_link_home" onClick="page_to('recently_aired')" ><img src="imgs/tv.png" /><p>Recently Aired</p></div>
+            <div class="nav_link_home" onClick="page_to('upcoming')" ><img src="imgs/calender.png"/><p>Upcoming</p></div>
+            <div class="nav_link_home" onClick="page_to('myshows')" ><img src="imgs/stacked.png" /><p>My Shows</p></div>
+            <div class="nav_link_home" onClick="page_to('search')" ><img src="imgs/search.png" /><p>Search</p></div>
+            <div class="nav_link_home" onClick="page_to('notifications')" ><img src="imgs/alarm.png" /><p>Notifications</p></div>
+            <div class="nav_link_home"><p>The Cloud Potato is powered by the TVMazeAPI.</p></div>
+		</div>
+	</div>
+<!-- END OF HOME NAV PAGE -->
+    
+<!-- RECENETLY AIRED PAGE -->
+	<div data-role="page" id="recently_aired" data-theme="a">
+		<div data-role="header" data-position="inline">
+        <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-home ui-btn-icon-notext" >Home</a>
+			<div id="heading">Recently Aired</div>
+		</div>
+		<div data-role="content" data-theme="a">
+			<p>Recently Aired</p>
+		</div>
+	</div>
+<!-- END OF RECENTLY AIRED PAGE -->
+
+    
+<!-- UPCOMING PAGE -->
+	<div data-role="page" id="upcoming" data-theme="a">
+		<div data-role="header" data-position="inline">
+         <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-home ui-btn-icon-notext" >Home</a>
+			<div id="heading">Upcoming</div>
+		</div>
+		<div data-role="content" data-theme="a">
+			<p>upcoming</p>
+		</div>
+	</div>
+<!-- END OF UPCOMING PAGE -->
+
+<!-- MYSHOWS PAGE -->
+	<div data-role="page" id="myshows" data-theme="a">
+		<div data-role="header" data-position="inline">
+         <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-home ui-btn-icon-notext" >Home</a>
+			<div id="heading">My Shows</div>
+		</div>
+		<div data-role="content" data-theme="a">
+			<p>My Shows</p>
+		</div>
+	</div>
+<!-- END OF MYSHOWS PAGE -->
+
+<!-- SEARCH PAGE -->
+	<div data-role="page" id="search" data-theme="a">
+		<div data-role="header" data-position="inline">
+         <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-home ui-btn-icon-notext" >Home</a>
+			<div id="heading">Search</div>
+		</div>
+		<div data-role="content" data-theme="a">
+			<p>Search</p>
+		</div>
+	</div>
+<!-- END OF SEARCH PAGE -->
+
+<!-- NOTIFICATIONS PAGE -->
+	<div data-role="page" id="notifications" data-theme="a">
+		<div data-role="header" data-position="inline">
+         <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-home ui-btn-icon-notext" >Home</a>
+			<div id="heading">Notifications</div>
+		</div>
+		<div data-role="content" data-theme="a">
+			<p>Notifications</p>
+		</div>
+	</div>
+<!-- END OF NOTIFICATIONS PAGE -->
+    
+</body>
+</html>

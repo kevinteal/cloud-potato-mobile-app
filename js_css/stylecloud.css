@@ -1,0 +1,42 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {
+    font-family: CloudHeading;
+    src:url(../font/Bangers/Bangers.ttf);
+}
+@font-face {
+    font-family: CloudText;
+    src:url(../font/Boogaloo/Boogaloo-Regular.ttf);
+}
+#heading{
+	font-family:CloudHeading;
+	font-size:1.5em;
+	letter-spacing:0.1em;
+	color:#F9AC57;
+	margin-top:0.1em;
+	text-align:center;
+	height:1.5em;
+}
+p{
+	font-family:CloudText;
+	color:#fff;
+	font-size:1.5em;
+}
+.nav_link_home{
+	float:left;
+	width:50%;
+	height:150px;
+	box-sizing:border-box;
+	padding:10px;
+	text-align:center;
+}
+.nav_link_home p{
+	margin-top:0px;
+	font-size:1.3em;
+}
+.nav_link_home img{
+	transition: all .2s ease-in-out;
+}
+.nav_link_home img:hover{
+	transform: scale(0.9);
+}
