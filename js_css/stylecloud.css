@@ -40,3 +40,66 @@ p{
 .nav_link_home img:hover{
 	transform: scale(0.9);
 }
+.ui-nosvg .ui-icon-myicon:after {
+	background-image:url(../themes/images/icons-png/pothome.png);
+}
+.ep_box{
+	font-family:CloudText;
+	float:left;
+	width:100%;
+	height:150px;
+	background-color:#F9AC57;
+	margin-bottom:20px;
+}
+.ep_box_title{
+	float:left;
+	width:50%;
+	height:25px;
+	font-style:italic;
+	text-decoration:underline;
+	color:#000;
+	text-align:center;
+	font-size:1.3em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.ep_box_epno{
+	float:left;
+	margin-top:3px;
+	width:50%;
+	height:25px;
+	color:#fff;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align:center;
+	font-size:1em;
+}
+.ep_box_info{
+	width:50%;
+	height:125px;
+	color:#fff;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	box-sizing:border-box;
+	padding:5px;
+	float:left;
+}
+.ep_box_img{
+	float:left;
+	width:50%;
+	height:125px;
+	text-align:center;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+.sml_txt{
+	font-size:0.8em;
+}
+.ep_box_ep_title{
+	display:block;
+	white-space: nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}

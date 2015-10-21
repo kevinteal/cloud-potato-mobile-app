@@ -140,6 +140,14 @@ label.ui-btn {
 }
 /* Icons
 -----------------------------------------------------------------------------------------------------------*/
+.noiconbg{
+	 background-color: transparent !important;
+    box-shadow: none !important;
+	border:none !important;
+}
+.ui-icon-pothome:after {
+	background-image:url(../themes/images/icons-png/pothome.png);
+}
 .ui-btn-icon-left:after,
 .ui-btn-icon-right:after,
 .ui-btn-icon-top:after,
