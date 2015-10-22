@@ -148,6 +148,9 @@ label.ui-btn {
 .ui-icon-pothome:after {
 	background-image:url(../themes/images/icons-png/pothome.png);
 }
+.ui-icon-potbin:after {
+	background-image:url(../themes/images/icons-png/potbin.png);
+}
 .ui-btn-icon-left:after,
 .ui-btn-icon-right:after,
 .ui-btn-icon-top:after,

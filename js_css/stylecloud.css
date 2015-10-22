@@ -103,3 +103,51 @@ p{
 	overflow:hidden;
 	text-overflow:ellipsis;
 }
+#flitershows{
+	color:#F9AC57 !important;
+	font-size:1.5em;
+	font-family:CloudText;
+}
+.showinfo{
+	float:left;
+	width:100%;
+	box-sizing:border-box;
+	font-family:CloudText;
+	padding-left:15px;
+	margin-bottom:20px;
+	color:#FFF;
+	font-size:1.2em;
+}
+.showlistbox{
+	width:100%;
+	float:left;
+	background-color:red;
+}
+.showlist_pointer{
+	float:left;
+	background-color:blue;
+	width:10%;
+}
+.showlist_heading{
+	float:left;
+	background-color:yellow;
+	width:90%;
+}
+.showlist_info{
+	width:100%;
+	float:left;
+	padding-left:20%;
+	box-sizing:border-box;
+	background-color:black;
+	color:#fff;
+}
+#myshowslist.ui-listview>li p{
+	white-space:normal !important;
+}
+#myshowslist.ui-listview>.ui-li-static, #myshowslist.ui-listview>.ui-li-divider, #myshowslist.ui-listview>li>a.ui-btn {
+	border-style:none;
+	
+}
+#myshowslist.ui-listview>li.ui-first-child{
+	margin-top:20px;
+}
