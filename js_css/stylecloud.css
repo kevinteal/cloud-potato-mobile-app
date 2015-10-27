@@ -40,9 +40,7 @@ p{
 .nav_link_home img:hover{
 	transform: scale(0.9);
 }
-.ui-nosvg .ui-icon-myicon:after {
-	background-image:url(../themes/images/icons-png/pothome.png);
-}
+
 .ep_box{
 	font-family:CloudText;
 	float:left;
@@ -84,6 +82,8 @@ p{
 	text-overflow: ellipsis;
 	box-sizing:border-box;
 	padding:5px;
+	font-size:0.8em;
+	font-family:Arial, Helvetica, sans-serif !important;
 	float:left;
 }
 .ep_box_img{
@@ -104,33 +104,26 @@ p{
 	text-overflow:ellipsis;
 }
 #flitershows{
-	color:#F9AC57 !important;
 	font-size:1.5em;
 	font-family:CloudText;
 }
-.showinfo{
-	float:left;
-	width:100%;
-	box-sizing:border-box;
-	font-family:CloudText;
-	padding-left:15px;
-	margin-bottom:20px;
-	color:#FFF;
-	font-size:1.2em;
+#flitershows::-webkit-input-placeholder {
+   color: #F9AC57;
 }
+
 .showlistbox{
 	width:100%;
 	float:left;
-	background-color:red;
 }
 .showlist_pointer{
 	float:left;
-	background-color:blue;
 	width:10%;
+	text-align:center;
 }
 .showlist_heading{
 	float:left;
-	background-color:yellow;
+	font-family:CloudText;
+	font-size:1.2em;
 	width:90%;
 }
 .showlist_info{
@@ -138,8 +131,10 @@ p{
 	float:left;
 	padding-left:20%;
 	box-sizing:border-box;
-	background-color:black;
 	color:#fff;
+}
+.showlist_info p{
+	font-family:Arial, Helvetica, sans-serif !important;
 }
 #myshowslist.ui-listview>li p{
 	white-space:normal !important;
@@ -150,4 +145,15 @@ p{
 }
 #myshowslist.ui-listview>li.ui-first-child{
 	margin-top:20px;
+}
+.user_info_p{
+	text-align:center;
+	font-size:1em;
+	color:#666;
+	margin-top:-10px;
+}
+hr.showlisthr{
+	height:2px;
+	border:0;
+	 background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(249, 172, 87, 1), rgba(0, 0, 0, 0));
 }
