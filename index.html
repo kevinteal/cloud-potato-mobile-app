@@ -112,12 +112,31 @@
 <!-- SEARCH PAGE -->
 	<div data-role="page" id="search" data-theme="a">
 		<div data-role="header" data-position="inline">
-         <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-pothome ui-btn-icon-notext" >Home</a>
+         <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-pothome ui-btn-icon-notext"  data-transition="slide" data-direction="reverse"  >Home</a>
 			<div id="heading">Search</div>
 		</div>
 		<div data-role="content" data-theme="a">
-			<p>Search</p>
+			<input type="search" id="flitershows" placeholder="Fliter TV Shows..." data-theme="a" />
+        <p class="user_info_p">Press Enter/Return to Search For TV Show.</p>
+        <div class="showlistbox">
+                    	<div class="showlist_pointer"><img onClick="addshow()" src="../../bet_penguin/theformbook/themes/images/icons-png/carat-r-white.png" height="20" width="20" /></div>
+                        <div class="showlist_heading"><a href="#popupCloseRight" data-rel="popup" data-position-to="window" data-transition="slideup">American Dad</a></div>
+                        <div class="showlist_info"><p class="whitenormal">Show about cia stan and nerd steve and crazy alien rodger steve and crazy alien rodger steve and crazy alien rodger</p></div>
+                        
+                         <hr class="showlisthr" />
+                        
+                         <div class="showlistbox">
+                    	<div class="showlist_pointer"><img src="../../bet_penguin/theformbook/themes/images/icons-png/carat-r-white.png" height="20" width="20" /></div>
+                        <div class="showlist_heading"><a href="#popupCloseRight" data-rel="popup" data-position-to="window" data-transition="slideup">Walking Dead</a></div>
+                        <div class="showlist_info"><p class="whitenormal">Zombie and cooking show</p></div>
+            		</div>
+            		</div>
 		</div>
+        <div data-role="popup" id="popupCloseRight" class="ui-content" style="max-width:280px">
+    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+<p>I have a close button at the top right corner with simple HTML markup.</p>
+ <center><a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Add</a></center>
+</div>
 	</div>
 <!-- END OF SEARCH PAGE -->
 
@@ -128,7 +147,21 @@
 			<div id="heading">Notifications</div>
 		</div>
 		<div data-role="content" data-theme="a">
-			<p>Notifications</p>
+			<p class="user_info_p">Receive Notifications About TV Shows Airing</p>
+            
+            <div class="showlistbox margin_bottom">
+            	<div class="showlist_heading full_width">American Dad</div>
+                <div class="notify_box">Last Night</div><div class="notify_box half_opacity">Tonight</div>
+            </div>
+            <div class="showlistbox margin_bottom">
+            	<div class="showlist_heading full_width">Family Guy</div>
+                <div class="notify_box">Last Night</div><div class="notify_box ">Tonight</div>
+            </div>
+            <div class="showlistbox margin_bottom">
+            	<div class="showlist_heading full_width">Gold Rush</div>
+                <div class="notify_box half_opacity" onClick="add_notify(this)">Last Night</div><div class="notify_box half_opacity">Tonight</div>
+            </div>
+            
 		</div>
 	</div>
 <!-- END OF NOTIFICATIONS PAGE -->

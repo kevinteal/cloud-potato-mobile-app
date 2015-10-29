@@ -126,6 +126,9 @@ p{
 	font-size:1.2em;
 	width:90%;
 }
+.full_width{
+	width:100% !important;
+}
 .showlist_info{
 	width:100%;
 	float:left;
@@ -152,8 +155,36 @@ p{
 	color:#666;
 	margin-top:-10px;
 }
+.whitenormal{
+	margin-top:0px;
+	font-size:1em !important;
+}
 hr.showlisthr{
+	display:block;
+	 clear:both;
 	height:2px;
 	border:0;
 	 background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(249, 172, 87, 1), rgba(0, 0, 0, 0));
+}
+.showlist_heading a{
+	text-decoration:none;
+	color:#000 !important;
+}
+.notify_box{
+	float:left;
+	background-color:#F9AC57;
+	color:#fff;
+	font-family:CloudText;
+	margin-left:2em;
+	box-sizing:border-box;
+	padding:0.5em;
+	text-align:center;
+	max-width:90px;
+	min-width:90px;
+}
+.half_opacity{
+	opacity:0.5; 
+}
+.margin_bottom{
+	margin-bottom:2em !important;
 }
