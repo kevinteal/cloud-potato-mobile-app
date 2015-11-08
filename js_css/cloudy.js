@@ -1,7 +1,7 @@
 // JavaScript Document
 $(document).ready(function(e) {
 	
-    
+	
 });
 
 function page_to(page){
@@ -10,7 +10,13 @@ function page_to(page){
 }
 
 function getepsfor(){
-	console.log("getting shows");
+	console.log("getting shows")
+	page_to("ep_info");
+	$("#seasonSelect").empty();
+    daySelect = document.getElementById('seasonSelect');
+ 	daySelect.options[daySelect.options.length] = new Option('SEASON 1', 'Value1');
+	daySelect.options[daySelect.options.length] = new Option('SEASON 3', 'Value0');
+	daySelect.options[daySelect.options.length] = new Option('SEASON 4', 'Value2');
 }
 function deleteshow(){
 	console.log("deleting show");

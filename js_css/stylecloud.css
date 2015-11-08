@@ -188,3 +188,44 @@ hr.showlisthr{
 .margin_bottom{
 	margin-bottom:2em !important;
 }
+#seasonSelect,#seasonSelect-button{
+	font-family:CloudText !important;
+	font-size:1.7em;
+	background:#fff;
+	color:#F9AC57;
+	padding:0;
+}
+
+.history_title,.history_epno{
+	box-sizing:border-box;
+	padding:0.2em;
+	float:left;
+	height:50px;
+	font-family:CloudText;
+}
+.history_wrap{
+	background:#F9AC57;
+}
+.history_title{
+	text-decoration:underline;
+	color:black;
+	width:70%;
+	font-size:1.3em;
+}
+.history_epno{
+	color:#fff;
+	font-size:1.2em;
+	width:30%;
+}
+.history_img{
+	float:right;
+	width:50%;
+	text-align:center;
+}
+.history_info p{
+	font-size:1.1em;
+	box-sizing:border-box;
+	padding:0.2em;
+	font-family:Arial, Helvetica, sans-serif !important;
+	
+}
