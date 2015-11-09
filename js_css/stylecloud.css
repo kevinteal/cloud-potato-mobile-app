@@ -48,6 +48,7 @@ p{
 	height:150px;
 	background-color:#F9AC57;
 	margin-bottom:20px;
+	border-bottom:10px solid #FF8000;
 }
 .ep_box_title{
 	float:left;
@@ -103,11 +104,11 @@ p{
 	overflow:hidden;
 	text-overflow:ellipsis;
 }
-#flitershows{
+#flitermyshows,#searchshows{
 	font-size:1.5em;
 	font-family:CloudText;
 }
-#flitershows::-webkit-input-placeholder {
+#flitermyshows::-webkit-input-placeholder,#searchshows::-webkit-input-placeholder  {
    color: #F9AC57;
 }
 
@@ -152,7 +153,7 @@ p{
 .user_info_p{
 	text-align:center;
 	font-size:1em;
-	color:#666;
+	color:#252525;
 	margin-top:-10px;
 }
 .whitenormal{
@@ -205,21 +206,18 @@ hr.showlisthr{
 }
 .history_wrap{
 	background:#F9AC57;
+	border-bottom:10px solid #FF8000;
 }
 .history_title{
 	text-decoration:underline;
 	color:black;
-	width:70%;
+	width:100%;
 	font-size:1.3em;
 }
-.history_epno{
-	color:#fff;
-	font-size:1.2em;
-	width:30%;
-}
+
 .history_img{
 	float:right;
-	width:50%;
+	width:100%;
 	text-align:center;
 }
 .history_info p{
