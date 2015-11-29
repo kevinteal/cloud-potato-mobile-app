@@ -19,17 +19,93 @@ $(document).on( 'pageinit',function(event){
 
 function page_to(page){
 	console.log(page);
+	
+	if(page=="myshows"){
+		myshows_setup();
+	}
+	
 	$( ":mobile-pagecontainer" ).pagecontainer( "change", "#"+page, { transition: "slide" } );
 }
 
-function getepsfor(){
+function getepsfor(id){
 	console.log("getting shows")
+	console.log(id);
+	
 	page_to("ep_info");
-	$("#seasonSelect").empty();
-    daySelect = document.getElementById('seasonSelect');
- 	daySelect.options[daySelect.options.length] = new Option('SEASON 1', 'Value1');
-	daySelect.options[daySelect.options.length] = new Option('SEASON 3', 'Value0');
-	daySelect.options[daySelect.options.length] = new Option('SEASON 4', 'Value2');
+	$("#show_ep_history").empty();
+	
+	$.getJSON( "http://api.tvmaze.com/shows/"+id+"/episodes", function( data ) {
+	  var items = [];
+	  db.transaction(function (tx) {	
+	  tx.executeSql('DELETE FROM ep_list'); //clear contents
+		  $.each( data, function( key, val ) {
+			  if(val.image == null){
+				  var img = "no_img.gif";
+			  }else{
+				   var img = val.image['medium'];
+			  }
+			  var name =val.name; var season = val.season; var epnum = val.number; var airdate = val.airdate; var summary = val.summary;
+			  //items.push( name + " " + season + " " + epnum + " " + airdate + " " + img  + " " + summary);
+			  summary = summary.replace(/["'-]/g, "");
+			  name = name.replace(/["'-]/g, "");
+			  summary = summary.replace(/(<([^>]+)>)/ig,"");
+			  tx.executeSql('INSERT INTO ep_list (Name, Season, Epnum, Airdate, Img, Summary) VALUES ("'+name+'", "'+season+'", "'+epnum+'", "'+airdate+'", "'+img+'", "'+summary+'")');
+		  });
+		  
+		  //open up transactions and use "select max(season) from ep_list" to get total season for drop down list
+		tx.executeSql('select max(season) as ms from ep_list', [], function(tx, results){
+			
+			var max_seasons = results.rows.item(0);
+			console.log("max seasons "+max_seasons.ms);
+			
+			$("#seasonSelect").empty();
+			daySelect = document.getElementById('seasonSelect');
+			
+			var i = 1;
+			for(i;i<=max_seasons.ms;i++){
+				console.log(i);
+				daySelect.options[daySelect.options.length] = new Option('SEASON '+i, 's'+i);
+			}
+			$("#seasonSelect").val('s'+max_seasons.ms).prop('selected', true).selectmenu('refresh','true');
+			
+			
+			tx.executeSql('SELECT * FROM ep_list where Season = '+max_seasons.ms+' order by Epnum asc', [], function(tx, results){
+			var len = results.rows.length, i;
+			var content = " ";
+			for(i=0;i<len;i++){	
+				var show = results.rows.item(i);
+				console.log(show.Name+" "+show.Season+" "+show.Epnum);
+				
+				
+				var d = new Date(show.Airdate);
+				var day_name = get_day(d.getDay());
+				var month_name = get_month(d.getMonth());
+				var year = d.getFullYear();
+				var day = ordinal_suffix_of(d.getDate());
+				var day_string = day_name + " " + day + " " + month_name + " " + year;
+				
+				
+				if(show.Name.length>25){
+					show.Name = show.Name.substr(0,25)+"...";
+				}
+				
+				content = '<div class="history_wrap">'+
+'            <div class="history_title">Ep '+show.Epnum+': '+show.Name+'</div>'+
+'            <div class="history_info"><div class="history_img"><img src="'+show.Img+'" height="140" width="250" /><br/><span class="sml_txt">Aired: '+day_string+'</span></div><p>'+show.Summary+'</p></div></div>';
+				
+				$("#show_ep_history").append(content);
+			}
+			});
+			
+		});
+		
+		//**here have the drop down list use on click to get that season out. possibly move above code for content into reusable function
+		  
+		});
+	 });
+	
+	
+	
 }
 
 function search_tvmaze_shows(tvshow){
@@ -79,10 +155,127 @@ function confirm_add(){
 	//console.log(add_show_data[3]);
 	db.transaction(function (tx) {	
 			tx.executeSql('INSERT INTO myshows (id, Name, Premiered, Runtime, Status, Day, AirTime, Summary) VALUES ('+add_show_data[0]+', "'+add_show_data[1]+'", "'+add_show_data[2]+'", "'+add_show_data[3]+'", "'+add_show_data[4]+'", "'+add_show_data[5]+'", "'+add_show_data[6]+'", "'+add_show_data[7]+'")');
-			//**UP TO HERE, NOW NEED TO SHOW MYSHOWS LIST ON PAGE, ALSO DELETE FROM DB
+			
 	});
+	$.ajax({
+	  method: "POST",
+	  url: "http://api.wolfstudioapps.co.uk/apps/cloud_potato/mobile_webfiles/add_to_wolf.php",
+	  data: { name: add_show_data[1], id: add_show_data[0], status: add_show_data[4] }
+	}).done(function( msg ) {
+  	//  alert( "Data Saved: " + msg );
+  });
 }
 function add_notify(e){
 	$(e).css("opacity",1);
 	console.log("add to notify");
+}
+
+function myshows_setup(){
+	$("#myshowslist").empty();
+	db.transaction(function (tx) {	
+			tx.executeSql('SELECT * FROM myshows order by Name asc', [], function(tx, results){
+			var len = results.rows.length, i;
+			var content = " ";
+			for(i=0;i<len;i++){	
+				var show = results.rows.item(i);
+				
+				content ="<li> "+
+            		"<div class='showlistbox'>"+
+                    	"<div class='showlist_pointer'><img onClick='getepsfor("+show.id+")' src='themes/images/icons-png/carat-r-white.png' width='20' height='20' /></div>"+
+                        "<div class='showlist_heading'>"+show.Name+"</div>"+
+                        "<div class='showlist_info'><p>Show about cia stan and nerd steve and crazy alien rodger steve and crazy alien rodger steve and crazy alien rodger</p></div>"+
+            		"</div>"+
+            	"</li>"+
+                 "<hr class='showlisthr' />";
+				 
+				 $("#myshowslist").append(content);
+				
+				
+			}
+			});
+			$("#myshowslist").listview("refresh");
+			
+	});
+}
+
+function get_day(day){
+	switch(day){
+	case 0:
+        day = "Sunday";
+        break;
+    case 1:
+        day = "Monday";
+        break;
+    case 2:
+        day = "Tuesday";
+        break;
+    case 3:
+        day = "Wednesday";
+        break;
+    case 4:
+        day = "Thursday";
+        break;
+    case 5:
+        day = "Friday";
+        break;
+    case 6:
+        day = "Saturday";
+        break;
+	}
+	return day;
+}
+function get_month(month){
+	switch(month){
+	case 0:
+        month = "January";
+        break;
+    case 1:
+        month = "February";
+        break;
+    case 2:
+        month = "March";
+        break;
+    case 3:
+        month = "April";
+        break;
+    case 4:
+        month = "May";
+        break;
+    case 5:
+        month = "June";
+        break;
+    case 6:
+        month = "July";
+        break;
+	case 7:
+        month = "August";
+        break;
+	case 8:
+        month = "September";
+        break;
+	case 9:
+        month = "October";
+        break;
+	case 10:
+        month = "November";
+        break;
+	case 11:
+        month = "December";
+        break;
+	}
+	return month;
+}
+function ordinal_suffix_of(i) {
+    var j = i % 10,
+        k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
 }

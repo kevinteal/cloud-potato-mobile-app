@@ -115,6 +115,8 @@ p{
 .showlistbox{
 	width:100%;
 	float:left;
+	padding:0.5em;
+	box-sizing:border-box;
 }
 .showlist_pointer{
 	float:left;
@@ -207,6 +209,7 @@ hr.showlisthr{
 .history_wrap{
 	background:#F9AC57;
 	border-bottom:10px solid #FF8000;
+	min-height:210px;
 }
 .history_title{
 	text-decoration:underline;
