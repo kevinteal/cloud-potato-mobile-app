@@ -1,6 +1,16 @@
 // JavaScript Document
 var add_show_data=[];
 $(document).ready(function(e) {
+	
+	
+	
+$("#seasonSelect").on('change', function() {
+  var season = this.value;
+  season = season.substring(1);
+  set_ep_list(season);
+});
+
+
 
 });
 $(document).on( 'pageinit',function(event){
@@ -14,6 +24,8 @@ $(document).on( 'pageinit',function(event){
 			search_tvmaze_shows(tvshow);
 		}
 	});
+	
+	
 	
 });
 
@@ -34,6 +46,7 @@ function getepsfor(id){
 	page_to("ep_info");
 	$("#show_ep_history").empty();
 	
+	
 	$.getJSON( "http://api.tvmaze.com/shows/"+id+"/episodes", function( data ) {
 	  var items = [];
 	  db.transaction(function (tx) {	
@@ -48,7 +61,11 @@ function getepsfor(id){
 			  //items.push( name + " " + season + " " + epnum + " " + airdate + " " + img  + " " + summary);
 			  summary = summary.replace(/["'-]/g, "");
 			  name = name.replace(/["'-]/g, "");
+			  //encodeURI(summary)
+			  //summary = summary;
+			  //name = name;
 			  summary = summary.replace(/(<([^>]+)>)/ig,"");
+			  name = name.replace(/(<([^>]+)>)/ig,"");
 			  tx.executeSql('INSERT INTO ep_list (Name, Season, Epnum, Airdate, Img, Summary) VALUES ("'+name+'", "'+season+'", "'+epnum+'", "'+airdate+'", "'+img+'", "'+summary+'")');
 		  });
 		  
@@ -67,9 +84,24 @@ function getepsfor(id){
 				daySelect.options[daySelect.options.length] = new Option('SEASON '+i, 's'+i);
 			}
 			$("#seasonSelect").val('s'+max_seasons.ms).prop('selected', true).selectmenu('refresh','true');
+			set_ep_list(max_seasons.ms); //set up the page grab the eps to output
+		});
 			
 			
-			tx.executeSql('SELECT * FROM ep_list where Season = '+max_seasons.ms+' order by Epnum asc', [], function(tx, results){
+		
+		  
+		});
+	 });
+	
+	
+	
+}
+
+
+function set_ep_list(season){
+	$("#show_ep_history").empty(); //empty ep list
+	db.transaction(function (tx) {
+	tx.executeSql('SELECT * FROM ep_list where Season = '+season+' order by Epnum asc', [], function(tx, results){
 			var len = results.rows.length, i;
 			var content = " ";
 			for(i=0;i<len;i++){	
@@ -88,7 +120,8 @@ function getepsfor(id){
 				if(show.Name.length>25){
 					show.Name = show.Name.substr(0,25)+"...";
 				}
-				
+				//decodeURI(show.Name)
+				//decodeURI(show.Summary)
 				content = '<div class="history_wrap">'+
 '            <div class="history_title">Ep '+show.Epnum+': '+show.Name+'</div>'+
 '            <div class="history_info"><div class="history_img"><img src="'+show.Img+'" height="140" width="250" /><br/><span class="sml_txt">Aired: '+day_string+'</span></div><p>'+show.Summary+'</p></div></div>';
@@ -96,21 +129,14 @@ function getepsfor(id){
 				$("#show_ep_history").append(content);
 			}
 			});
-			
-		});
-		
-		//**here have the drop down list use on click to get that season out. possibly move above code for content into reusable function
-		  
-		});
-	 });
-	
-	
-	
+	});
+	//** just moved this code to reusable function and have drop down change the season. Tried to santize input but hard to send in html function output. also could use show img on show search, would need to alter db to inculd img. or simpler just have none img placeholder
 }
+
 
 function search_tvmaze_shows(tvshow){
 	console.log(tvshow);
-	$.getJSON("http://api.wolfstudioapps.co.uk/apps/cloud_potato/mobile_webfiles/tvmaze_search_mobile.php?value="+tvshow)
+	$.getJSON("http://api.wolfstudioapps16.co.uk/apps/cloud_potato/mobile_webfiles/tvmaze_search_mobile.php?value="+tvshow)
 	  .done(function( json ) {
 		console.log( json);
 		var content = "";
@@ -119,11 +145,14 @@ function search_tvmaze_shows(tvshow){
 				
 				var summary_sanitised = val.Summary.replace(/["'-]/g, "");
 				var name_sanitised = val.Name.replace(/["'-]/g, "");
+				
 				var show_arr = [val.id,name_sanitised,val.Time,val.Day,val.Premiered,val.Runtime,summary_sanitised,val.Status];
 				var summary = val.Summary.substring(0,140);
 				if(val.Summary.length>140){
 					summary+="...";
 				}
+				
+				
 				$("#search_show_info").empty();
 				content+='<div class="showlistbox">';
 				content+='<div class="showlist_pointer"><img src="themes/images/icons-png/carat-r-white.png" height="20" width="20" /></div>';
@@ -140,11 +169,61 @@ function search_tvmaze_shows(tvshow){
 	});
 }
 
-function deleteshow(){
-	console.log("deleting show");
+function delete_shows_opt(){	
+	var x = document.getElementsByClassName("myshowitem");
+	
+	//if has class icon-check, change functions and img back to carat and go to eps - user done deleting.
+	//if has class icon-potbin, change functions to delete 
+	
+	//check opt for click
+	
+	var opt = 0; //set to delete. //0 - delete. 1 - gotoeps
+	
+	if($("#myshowsdelete").hasClass('ui-icon-check')){
+		//done deleting
+		opt=1;
+		$("#myshowsdelete").addClass('ui-icon-potbin').removeClass('ui-icon-check');
+	}else{
+		//start deleting
+		opt=0;
+		$("#myshowsdelete").addClass('ui-icon-check').removeClass('ui-icon-potbin');
+	}
+	
+	var i=0;
+	for (i; i < x.length; i++) {
+		
+		if(opt==0){
+			document.getElementById(x[i].id).src="themes/images/icons-png/delete-white.png"; 		
+			document.getElementById(x[i].id).onclick = function () {
+				var sname = $(this).data("sname");
+				$("#del_confirm").text("Delete Show: "+sname+"?");
+				$("#popupConDel").popup("open");
+				var showid = this.id;
+				document.getElementById("delconid").onclick = function(){
+					confirm_del(showid);
+				}
+				
+		  		return false; // <-- to suppress the default link behaviour
+		};
+		}else if(opt==1){
+			document.getElementById(x[i].id).src="themes/images/icons-png/carat-r-white.png"; 		
+			document.getElementById(x[i].id).onclick = function () {
+				var id = this.id;
+				id=id.substr(1,id.length);
+		 	 	getepsfor(id);
+		  		return false; // <-- to suppress the default link behaviour
+		};			
+		}
+
+	}
+}
+
+function confirm_del(id){
+	//*****here just sent over id from above function
+	console.log("deleting show "+id);
 }
 function addshow(id,Name,Time,Day,Premiered,Runtime,Summary,Status){
-	//clear gobal array for new show
+	//clear gobal array for new show  
 	$("#add_show_name_confirm").text("Add Show: "+Name+"?");
 	add_show_data = [];
 	add_show_data.push(id,Name,Premiered,Runtime,Status,Day,Time,Summary);
@@ -159,7 +238,7 @@ function confirm_add(){
 	});
 	$.ajax({
 	  method: "POST",
-	  url: "http://api.wolfstudioapps.co.uk/apps/cloud_potato/mobile_webfiles/add_to_wolf.php",
+	  url: "http://api.wolfstudioapps16.co.uk/apps/cloud_potato/mobile_webfiles/add_to_wolf.php",
 	  data: { name: add_show_data[1], id: add_show_data[0], status: add_show_data[4] }
 	}).done(function( msg ) {
   	//  alert( "Data Saved: " + msg );
@@ -179,11 +258,16 @@ function myshows_setup(){
 			for(i=0;i<len;i++){	
 				var show = results.rows.item(i);
 				
+				var summary = decodeURI(show.Summary);
+				var s_summary = summary.substring(0,140);
+				if(summary.length>140){
+					s_summary+="...";
+				}
 				content ="<li> "+
             		"<div class='showlistbox'>"+
-                    	"<div class='showlist_pointer'><img onClick='getepsfor("+show.id+")' src='themes/images/icons-png/carat-r-white.png' width='20' height='20' /></div>"+
-                        "<div class='showlist_heading'>"+show.Name+"</div>"+
-                        "<div class='showlist_info'><p>Show about cia stan and nerd steve and crazy alien rodger steve and crazy alien rodger steve and crazy alien rodger</p></div>"+
+                    	"<div class='showlist_pointer'><img class='myshowitem' id='i"+show.id+"' data-sname='"+decodeURI(show.Name)+"' onClick='getepsfor("+show.id+")' src='themes/images/icons-png/carat-r-white.png' width='20' height='20' /></div>"+
+                        "<div class='showlist_heading'>"+decodeURI(show.Name)+"</div>"+
+                        "<div class='showlist_info'><p>"+s_summary+"</p></div>"+
             		"</div>"+
             	"</li>"+
                  "<hr class='showlisthr' />";
