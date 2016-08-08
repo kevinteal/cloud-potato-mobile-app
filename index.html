@@ -16,14 +16,15 @@
 <!-- HOME NAV PAGE -->
 	<div data-role="page" id="cloud_home" data-theme="a">
 		<div data-role="header" data-position="inline">
-			<div id="heading">The Cloud Potato</div>
+			<div class="heading">The Cloud Potato</div>
 		</div>
 		<div data-role="content" data-theme="a">
 			<div class="nav_link_home" onClick="page_to('recently_aired')" ><img src="imgs/tv.png" /><p>Recently Aired</p></div>
             <div class="nav_link_home" onClick="page_to('upcoming')" ><img src="imgs/calender.png"/><p>Upcoming</p></div>
             <div class="nav_link_home" onClick="page_to('myshows')" ><img src="imgs/stacked.png" /><p>My Shows</p></div>
             <div class="nav_link_home" onClick="page_to('search')" ><img src="imgs/search.png" /><p>Search</p></div>
-            <div class="nav_link_home" onClick="page_to('notifications')" ><img src="imgs/alarm.png" /><p>Notifications</p></div>
+            <div class="nav_link_home inactive" ><img src="imgs/alarm.png" /><p>Notifications</p></div>
+            <!-- add above onClick="page_to('notifications')" when ready -->
             <div class="nav_link_home"><p>The Cloud Potato is powered by the TVMazeAPI.</p></div>
 		</div>
 	</div>
@@ -33,7 +34,7 @@
 	<div data-role="page" id="recently_aired" data-theme="a">
 		<div data-role="header" data-position="inline">
         <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-pothome ui-btn-icon-notext" data-transition="slide" data-direction="reverse" >Home</a>
-			<div id="heading">Recently Aired</div>
+			<div class="heading">Recently Aired</div>
 		</div>
 		<div data-role="content" data-theme="a">
         <!-- need to chop text at about 100 chars when inserting synopsis, the titles should sort themselves out with css, also chop date to less than 40 chars-->
@@ -57,7 +58,7 @@
 	<div data-role="page" id="upcoming" data-theme="a">
 		<div data-role="header" data-position="inline">
          <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-pothome ui-btn-icon-notext" data-transition="slide" data-direction="reverse" >Home</a>
-			<div id="heading">Upcoming</div>
+			<div class="heading">Upcoming</div>
 		</div>
 		<div data-role="content" data-theme="a">
         <div class="ep_box">
@@ -79,7 +80,7 @@
 	<div data-role="page" id="myshows" data-theme="a">
 		<div data-role="header" data-position="inline">
         <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-pothome ui-btn-icon-notext" data-transition="slide" data-direction="reverse" >Home</a>
-			<div id="heading">My Shows</div>
+			<div class="heading">My Shows</div>
             <a href="#" id="myshowsdelete" onclick='delete_shows_opt()' class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-right ui-icon-potbin ui-btn-icon-notext" >Delete</a>
 		</div>
 		<div data-role="content" data-theme="a">
@@ -104,7 +105,7 @@
             </ul>
 
 		</div>
-        <div data-role="popup" id="popupConDel" class="ui-content" style="max-width:280px">
+        <div data-role="popup" data-transition="slideup" id="popupConDel" class="ui-content" style="max-width:280px">
     <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
 <p id="del_confirm">Delete Show</p>
  <center><a id="delconid" onClick="confirm_del()" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Delete</a></center>
@@ -117,7 +118,7 @@
 	<div data-role="page" id="ep_info" data-theme="a">
 		<div data-role="header" data-position="inline">
         <a href="#myshows" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-potback ui-btn-icon-notext" data-transition="slide" data-direction="reverse" >TV Shows</a>
-			<div id="heading">The Walking Dead</div>
+			<div class="heading" id="ep_info_head">The Walking Dead</div>
 		</div>
 		<div data-role="content" data-theme="a">
         <select name="seasonSelect" id="seasonSelect" data-mini="true">
@@ -134,7 +135,7 @@
 	<div data-role="page" id="search" data-theme="a">
 		<div data-role="header" data-position="inline">
          <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-pothome ui-btn-icon-notext"  data-transition="slide" data-direction="reverse"  >Home</a>
-			<div id="heading">Search</div>
+			<div class="heading">Search</div>
 		</div>
 		<div data-role="content" data-theme="a">
 			<input type="search" id="searchshows" placeholder="Search TV Shows..." data-theme="a" />
@@ -153,7 +154,7 @@
 	<div data-role="page" id="notifications" data-theme="a">
 		<div data-role="header" data-position="inline">
          <a href="#cloud_home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-nodisc-icon noiconbg ui-btn-icon-left ui-icon-pothome ui-btn-icon-notext" data-transition="slide" data-direction="reverse" >Home</a>
-			<div id="heading">Notifications</div>
+			<div class="heading">Notifications</div>
 		</div>
 		<div data-role="content" data-theme="a">
 			<p class="user_info_p">Receive Notifications About TV Shows Airing</p>

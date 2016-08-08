@@ -30,11 +30,17 @@ $(document).on( 'pageinit',function(event){
 });
 
 function page_to(page){
-	console.log(page);
+	//console.log(page);
 	
 	if(page=="myshows"){
 		myshows_setup();
 	}
+	
+	if(page=="recently_aired"){
+		recently_aired_setup();
+	}
+	
+	
 	
 	$( ":mobile-pagecontainer" ).pagecontainer( "change", "#"+page, { transition: "slide" } );
 }
@@ -46,6 +52,15 @@ function getepsfor(id){
 	page_to("ep_info");
 	$("#show_ep_history").empty();
 	
+	
+	
+	db.transaction(function (tx) {	
+		tx.executeSql('SELECT Name FROM myshows Where id='+id+' ', [], function (tx, results) {
+			  
+			  var show_name = results.rows.item(0).Name
+			  document.getElementById("ep_info_head").innerHTML=show_name.substr(0,20)+"...";
+			});
+	});
 	
 	$.getJSON( "http://api.tvmaze.com/shows/"+id+"/episodes", function( data ) {
 	  var items = [];
@@ -198,9 +213,14 @@ function delete_shows_opt(){
 				var sname = $(this).data("sname");
 				$("#del_confirm").text("Delete Show: "+sname+"?");
 				$("#popupConDel").popup("open");
+				
 				var showid = this.id;
+				showid=showid.substr(1,showid.length);
+				var parent = $("#"+this.id).parent().parent();
+				//console.log(parent);
+				
 				document.getElementById("delconid").onclick = function(){
-					confirm_del(showid);
+					confirm_del(showid,parent);
 				}
 				
 		  		return false; // <-- to suppress the default link behaviour
@@ -218,9 +238,14 @@ function delete_shows_opt(){
 	}
 }
 
-function confirm_del(id){
+function confirm_del(id,parent){
 	//*****here just sent over id from above function
 	console.log("deleting show "+id);
+	$(parent).remove();
+	db.transaction(function (tx) {	
+			tx.executeSql('DELETE FROM myshows WHERE id='+id+' ');
+			
+	});
 }
 function addshow(id,Name,Time,Day,Premiered,Runtime,Summary,Status){
 	//clear gobal array for new show  
@@ -241,7 +266,7 @@ function confirm_add(){
 	  url: "http://api.wolfstudioapps16.co.uk/apps/cloud_potato/mobile_webfiles/add_to_wolf.php",
 	  data: { name: add_show_data[1], id: add_show_data[0], status: add_show_data[4] }
 	}).done(function( msg ) {
-  	//  alert( "Data Saved: " + msg );
+  	  alert( "Data Saved: " + msg );
   });
 }
 function add_notify(e){
@@ -362,4 +387,8 @@ function ordinal_suffix_of(i) {
         return i + "rd";
     }
     return i + "th";
+}
+
+function recently_aired_setup(){
+	console.log("take id of users shows, send them to the wolf server and pull back episodes which aired this week. make a check on 'searched' if show not searched then search it.\n also make automatic script that searches unsearched shows every half hour. if it finds ep that aired in last 7 days add to recently aired shows, if finds one for next 7 days add to upcoming. also make sure that when user adds show the id is sent to the wolf server so it can be searched");
 }
